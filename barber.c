@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 #define CHAIRS 3
-#define CUSTOMERS 10
+#define CUSTOMERS 5
 
 sem_t waitingRoom;
 sem_t barberSeat;
@@ -73,11 +73,10 @@ int main(){
     pthread_t cmrid[CUSTOMERS];
     /* Create barber thread */
     pthread_create(&bbrtid,0,barber,0);
+    
     /* Create customer threads */
-    int customerID[CUSTOMERS];
     for(int i = 0; i < CUSTOMERS; i++){
-        customerID[i] = i;
-        pthread_create(&cmrid[i],0,customer,&customerID[i]);
+        pthread_create(&cmrid[i],0,customer,i);
     }
     /* Join all threads */
     for (int i = 0; i < CUSTOMERS; i++){
